@@ -1,4 +1,4 @@
-package com.example.agromarket.network.dto;
+package com.example.agromarket.network.dto.auth;
 
 public class LoginDto {
 
