@@ -2,6 +2,7 @@ package com.example.agromarket;
 
 import android.os.Bundle;
 
+import com.example.agromarket.analytics.AnalyticsAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +19,17 @@ import com.example.agromarket.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.HashMap;
+
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    @Inject
+    public AnalyticsAdapter analyticsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                analyticsAdapter.report("test" , new HashMap<>());
             }
         });
     }
