@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -43,6 +44,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+
+    //HILT
+    implementation "com.google.dagger:hilt-android:2.40"
+    annotationProcessor "com.google.dagger:hilt-android-compiler:2.40"
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
