@@ -3,7 +3,9 @@ package com.example.agromarket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,21 +50,40 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(view1 -> {
+        binding.buttonLoging.setOnClickListener(view1 -> {
             //NavHostFragment.findNavController(FirstFragment.this)
             //.navigate(R.id.action_FirstFragment_to_SecondFragment));
+            if(validLoginForm()){
+                sendAuthRequest();
+            }
             sendAuthRequest();
-            sendUserRequest();
+            //sendUserRequest();
         });
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SHARED_preferences", Context.MODE_PRIVATE);
         storage = new SharedPreferenceStorage(sharedPreferences);
-        binding.textviewFirst.setText(storage.getToken());
+    }
+
+    private boolean validLoginForm() {
+        Editable usernNameText = binding.inputUsername.getText();
+        Editable passwordNameText = binding.inputPassword.getText();
+        if(usernNameText.length()==0 && !Patterns.EMAIL_ADDRESS.matcher(usernNameText).matches()){
+            binding.inputUsername.setError(getString(R.string.invalid_email));
+        }else if (passwordNameText.length()==0){
+            binding.inputUsername.setError(null);
+            binding.inputPassword.setError(getString(R.string.invalid_password));
+        }else{
+            binding.inputUsername.setError(null);
+            binding.inputPassword.setError(null);
+            return true;
+        }
+        return false;
     }
 
     private void sendAuthRequest() {
         Retrofit retrofit = RetrofitGenerator.getInstance(storage);
         AuthService authService = retrofit.create(AuthService.class);
-        LoginDto loginDto = new LoginDto("demoYarit@mail.escuelaing.edu.co", "123451");
+        //LoginDto loginDto = new LoginDto("demoYarit@mail.escuelaing.edu.co", "123451");
+        LoginDto loginDto = new LoginDto(binding.inputUsername.getText().toString(), binding.inputPassword.getText().toString());
         Action1<TokenDto> successAction = tokenDto -> onAuthSuccess(tokenDto.getToken());
         Action1<Throwable> failedAction = throwable -> Log.e("Developer", "Auth error", throwable);
         authService.auth(loginDto)
@@ -88,14 +109,15 @@ public class FirstFragment extends Fragment {
 
     private void onSuccessListUser(List<UserDto> users){
         Log.d("Developer","Users: " + users);
-        binding.textviewFirst.setText(users.toString());
+        //binding.textviewFirst.setText(users.toString());
     }
 
 
     private void onAuthSuccess(String token){
         Log.d("Developer","TokenDto: " + token);
-        binding.textviewFirst.setText(token);
         storage.saveToken(token); //Value of token its lost if the app is uninstalled M
+        NavHostFragment.findNavController(FirstFragment.this)
+                .navigate(R.id.action_FirstFragment_to_SecondFragment);
     }
 
     @Override
