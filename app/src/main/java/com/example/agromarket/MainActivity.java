@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private static final int SELECT_FILE = 1;
-    private Button bntSearch;
 
     @Inject
     public AnalyticsAdapter analyticsAdapter;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bntSearch = (Button) findViewById(R.id.btn_search);
+
     }
 
     @Override
@@ -153,7 +153,10 @@ public class MainActivity extends AppCompatActivity {
                             // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
                             ImageView image = (ImageView) findViewById(R.id.imageId);
                             image.setImageBitmap(bmp);
-
+                            Button btnSearch = (Button) findViewById(R.id.btn_search);
+                            btnSearch.setVisibility(View.VISIBLE);
+                            TextView nombrePlanta = (TextView) findViewById(R.id.imageName);
+                            nombrePlanta.setVisibility(View.VISIBLE);
                         }
                     }
                 }

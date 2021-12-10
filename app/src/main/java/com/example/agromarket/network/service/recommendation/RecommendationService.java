@@ -6,6 +6,7 @@ import com.example.agromarket.network.dto.model.TreatmentDto;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -15,5 +16,5 @@ public interface RecommendationService {
     Observable<List<TreatmentDto>> recommendationsByImage(@Path("imageUrl") String imageUrl);
 
     @GET("v1/recommendation/info/{imageUrl}")
-    public DiseaseDto infoDiseaseByImage(@Path("imageUrl") String imageUrl);
+    Observable<DiseaseDto> infoDiseaseByImage(@Path("imageUrl") String imageUrl);
 }
