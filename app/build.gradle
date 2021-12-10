@@ -27,6 +27,9 @@ android {
             initWith debug
             buildConfigField "String", "API_BASE_URL", "\"https://agromarketeci.herokuapp.com/\""
         }
+        debug{
+            buildConfigField "String", "API_BASE_URL", "\"https://agromarketeci.herokuapp.com/\""
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
